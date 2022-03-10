@@ -7,11 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-success
-
+${message }
 <a href="transfer">transfer</a>
 <a href="withdraw">withdraw</a>
-<a href="deposit">deposit</a>
+<a href="deposit">deposit</a> 
+<a href="addaccount">addAccount</a>
+<a href="/bankApp">home</a> 
 
 </body>
 </html>

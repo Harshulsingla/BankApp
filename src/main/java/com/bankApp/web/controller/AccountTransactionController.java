@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bankApp.model.dto.DepositDto;
 import com.bankApp.model.dto.TransferDto;
@@ -13,6 +15,7 @@ import com.bankApp.model.dto.WithdrawDto;
 import com.bankApp.model.service.AccountService;
 
 @Controller
+//@RequestMapping(value="transaction")
 public class AccountTransactionController {
 	
 	private AccountService accountService;
@@ -24,21 +27,24 @@ public class AccountTransactionController {
 	
 	//--------- Get and Post for Transfer Operation ---------
 	
-//	@GetMapping(path = "transfer")
-//	public ModelAndView transferGet(ModelAndView mv) {
-//		mv.setViewName("transfer");
-//		mv.addObject("transferDto", new TransferDto());
-//		return mv;
-//	}
-//	
-//	
-//	
-//	@PostMapping(path = "transfer")
-//	public String transferPost(@ModelAttribute TransferDto transferDto) {
-//		accountService.transfer(transferDto.getFromAccountId(),
-//				transferDto.getToAccountId(), transferDto.getAmount());
-//		return "redirect:success";
-//	}
+	@GetMapping(path = "transfer")
+	public ModelAndView transferGet(ModelAndView mv) {
+		mv.setViewName("transfer");
+		mv.addObject("transferDto", new TransferDto());
+		return mv;
+	}
+	
+	
+	
+	@PostMapping(path = "transfer")
+	public String transferPost(@ModelAttribute TransferDto transferDto, RedirectAttributes attributes) {
+		accountService.transfer(transferDto.getFromAccountId(),
+				transferDto.getToAccountId(), transferDto.getAmount());
+		attributes.addFlashAttribute("message", 
+				"fund is transfered from acc "+ transferDto.getFromAccountId()+" to "+ 
+		transferDto.getToAccountId()+" successfully!");
+		return "redirect:success";
+	}
 
 	//--------- Get and Post for Withdraw Operation ---------
 	
@@ -71,12 +77,12 @@ public class AccountTransactionController {
 			@PostMapping(path = "deposit")
 			public String depositPost(@ModelAttribute DepositDto depositDto) {
 				accountService.deposit(depositDto.getAccountId(), depositDto.getAmount());
-				return "redirect:success";
+				return "redirect:transaction/success";
 			}
 
 	
 	
-	@GetMapping(path = "success")
+	@GetMapping(path = "transaction/success")
 	public String transferGet() {
 		return "success";
 	}

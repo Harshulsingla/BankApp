@@ -15,5 +15,6 @@ HOME
 <a href="transfer">transfer</a><br>
 <a href="withdraw">withdraw</a><br>
 <a href="deposit">deposit</a><br>
+<a href="addaccounts">add account</a><br>
 </body>
 </html>
